@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        table { margin: auto; border-collapse: collapse; width: 50%; }
+        th, td { padding: 10px; border: 1px solid black; text-align: center; }
+        button { margin-top: 10px; padding: 10px 20px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <h2>GPA Calculator</h2>
+    <table>
+        <tr>
+            <th>Subject</th>
+            <th>Grade</th>
+        </tr>
+        <tr><td>OOP</td><td><input type="text" id="OOP"></td></tr>
+        <tr><td>Expository Writing</td><td><input type="text" id="ExpositoryWriting"></td></tr>
+        <tr><td>Discrete Structure</td><td><input type="text" id="DiscreteStructure"></td></tr>
+        <tr><td>Applied Physics</td><td><input type="text" id="AppliedPhysics"></td></tr>
+        <tr><td>Calculus</td><td><input type="text" id="Calculus"></td></tr>
+        <tr><td>ICP</td><td><input type="text" id="ICP"></td></tr>
+        <tr><td>OOP Lab</td><td><input type="text" id="OOPLab"></td></tr>
+    </table>
+    <button onclick="calculateGPA()">Calculate GPA</button>
+    <h3 id="result"></h3>
+
+    <script>
+        function gradeToPoint(grade) {
+            const grades = { 'A': 4.0, 'B+': 3.5, 'B': 3.0, 'C+': 2.5, 'C': 2.0, 'D': 1.0, 'F': 0.0 };
+            return grades[grade.toUpperCase()] || -1;
+        }
+
+        function calculateGPA() {
+            const subjects = ['OOP', 'ExpositoryWriting', 'DiscreteStructure', 'AppliedPhysics', 'Calculus', 'ICP', 'OOPLab'];
+            const credits = [3, 3, 3, 3, 3, 2, 1];
+            let totalPoints = 0, totalCredits = 18;
+            
+            for (let i = 0; i < subjects.length; i++) {
+                let grade = document.getElementById(subjects[i]).value;
+                let gradePoint = gradeToPoint(grade);
+                
+                if (gradePoint === -1) {
+                    document.getElementById('result').innerText = 'Invalid grade entered. Use A, B+, B, C+, C, D, or F.';
+                    return;
+                }
+                totalPoints += gradePoint * credits[i];
+            }
+            let gpa = totalPoints / totalCredits;
+            document.getElementById('result').innerText = 'Your GPA is: ' + gpa.toFixed(2);
+        }
+    </script>
+</body>
+</html>
